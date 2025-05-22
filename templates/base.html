@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+        <title>{{title}}| Codelogs.net</title>
+    {% else %}
+        <title>Codelogs.net</title>
+    {% endif %}
+</head>
+<body>
+
+    <a href="/">Codelogs.net</a>
+    <a href="/about">About</a>
+
+    {% block content %}{% endblock content %}
+
+</body>
+</html>

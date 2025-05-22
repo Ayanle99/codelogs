@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Books</h1>
+{% for book in books %}
+    <div style="padding: 20px;">
+        <p>Title: {{book.title}}</p>
+        <p>Author: {{book.author}}</p>
+        <p>Pages: {{book.pages}}</p>
+    </div>
+{% endfor %}
+{% endblock content %}
