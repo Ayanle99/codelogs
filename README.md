@@ -21,11 +21,11 @@ This Flask blog app will include:
 
 ## ✅ Progress
 
-| Day | Topic              | Status     |
-|-----|--------------------|------------|
-| 0   | Flask Setup        | ✅ Done     |
-| 1   | Templates Setup    | ✅ Done     |
-| 2   | _Coming soon..._   | 🚧 In progress |
+| Day | Topic           | Status  |
+|-----|-----------------|---------|
+| 0   | Flask Setup     | ✅ Done  |
+| 1   | Templates Setup | ✅ Done  |
+| 2   | Web Forms       | ✅ Done  |
 
 > Progress will be updated daily as the project develops.
 
