@@ -25,7 +25,8 @@ This Flask blog app will include:
 | 0   | Flask Setup      | ✅ Done     |
 | 1   | Templates Setup  | ✅ Done     |
 | 2   | Web Forms        | ✅ Done     |
-| 3   | _Coming soon..._ | 🚧 In progress |
+| 3   | Blueprints       | ✅ Done     |
+| 4   | _Coming soon..._ | 🚧 In progress |
 
 > Progress will be updated daily as the project develops.
 
