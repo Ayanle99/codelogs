@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div style="max-width: 400px; margin: 20px auto; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+  <h2>Register</h2>
+  <form method="POST" action="{{ url_for('auth.register') }}">
+    {{ form.hidden_tag() }}
+
+    <div style="margin-bottom: 15px;">
+      {{ form.username.label }}<br>
+      {{ form.username(size=32, placeholder="Enter username") }}<br>
+      {% for error in form.username.errors %}
+        <span style="color: red;">{{ error }}</span><br>
+      {% endfor %}
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      {{ form.email.label }}<br>
+      {{ form.email(size=32, placeholder="Enter email") }}<br>
+      {% for error in form.email.errors %}
+        <span style="color: red;">{{ error }}</span><br>
+      {% endfor %}
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      {{ form.password.label }}<br>
+      {{ form.password(size=32, placeholder="Enter password") }}<br>
+      {% for error in form.password.errors %}
+        <span style="color: red;">{{ error }}</span><br>
+      {% endfor %}
+    </div>
+
+    <div style="margin-bottom: 15px;">
+      {{ form.password2.label }}<br>
+      {{ form.password2(size=32, placeholder="Repeat password") }}<br>
+      {% for error in form.password2.errors %}
+        <span style="color: red;">{{ error }}</span><br>
+      {% endfor %}
+    </div>
+
+    <button type="submit" style="padding: 8px 16px;">{{ form.submit.label.text }}</button>
+  </form>
+</div>
+{% endblock %}

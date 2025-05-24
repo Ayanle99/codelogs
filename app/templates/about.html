@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>About Page</h1>
+
+<table>
+    <tbody>
+        <tr>
+            <td>Author</td>
+            <td>{{user.author}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{user.email}}</td>
+        </tr>
+        <tr>
+            <td>Info</td>
+            <td>{{user.info}}</td>
+        </tr>
+    </tbody>
+
+</table>
+
+
+{% endblock content %}
