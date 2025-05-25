@@ -12,18 +12,14 @@
 </head>
 <body>
 
-<div style="padding: 15px;">
-    <a href="{{ url_for('main.index') }}">Codelogs.net</a>
-    <a href="{{ url_for('main.about') }}">About</a>
+    <a href="{{url_for('main.index') }}">Codelogs.net</a>
+    <a href="{{url_for('main.about')}}">About</a>
     {% if current_user.is_authenticated %}
-        <a href="{{ url_for('users.user', username=current_user.username) }}">Profile</a>
-        <a href="{{ url_for('main.logout') }}">Logout</a>
+        <a href="{{url_for('users.user', username=current_user.username)}}">Profile</a>
+        <a href="{{url_for('main.logout') }}">logout</a>
     {% else %}
-        <a href="{{ url_for('auth.login') }}">Login</a>
+        <a href="{{ url_for('auth.login') }}">login</a>
     {% endif %}
-</div>
-
-
 
     <div style="padding: 20px;">
         {% if get_flashed_messages() %}

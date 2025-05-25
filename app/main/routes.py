@@ -1,15 +1,22 @@
 from flask import Flask, render_template, redirect, url_for, flash
 from app.main import bp
-from flask import redirect, url_for, flash
-from flask_login import logout_user, login_required
-from app.models import *
-from flask_login import current_user
-
+from flask_login import login_required, logout_user
 
 @bp.route('/')
-@login_required
 def index():
-    return render_template('index.html', title='Home',user=current_user)
+    books = [
+        {
+            'title': 'The River War',
+            'author': 'Winston Spencer Churchill',
+            'pages': 350
+        },
+        {
+            'title': 'FIVE WEEKS IN A BALLOON',
+            'author': 'Jules Verne',
+            'pages': 300
+        }
+    ]
+    return render_template('index.html', title='Home', books=books)
 
 
 
@@ -23,9 +30,8 @@ def about():
     return render_template('about.html', title='About', user=user)
 
 
+
 @bp.route('/logout')
-@login_required
 def logout():
     logout_user()
-    flash('You have been logged out.', 'info')
     return redirect(url_for('main.index'))

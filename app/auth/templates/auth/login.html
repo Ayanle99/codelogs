@@ -1,62 +1,39 @@
 {% extends "base.html" %}
-
 {% block content %}
-<style>
-  .centered-form {
-    max-width: 320px;
-    margin: 60px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    background: #f9f9f9;
-  }
-  .centered-form div {
-    margin-bottom: 15px;
-  }
-  .centered-form p {
-    margin-left: 20px;
-    color: red;
-    font-size: 0.9em;
-  }
-  .centered-form h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-</style>
 
-<div class="centered-form">
-  <h1>Login</h1>
+<h1>Login</h1>
 
-  <form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
+<form action="" method="post" novalidate>
+  {{ form.hidden_tag() }}
 
-    <div>
-      {{ form.username.label() }}<br>
-      {{ form.username(size=25) }}
-      {% for error in form.username.errors %}
-          <p>{{ error }}</p>
-      {% endfor %}
-    </div>
+  <div>
+    {{ form.username.label()}}
+    {{ form.username(size=25)}}
+    {% for error in form.username.errors %}
+        <p style="margin-left: 20px; color: red;">{{ error}}</p>
+    {% endfor %}
+  </div>
 
-    <div>
-      {{ form.password.label() }}<br>
-      {{ form.password() }}
-      {% for error in form.password.errors %}
-          <p>{{ error }}</p>
-      {% endfor %}
-    </div>
+  <div>
+    {{ form.password.label()}}
+    {{ form.password()}}
+    {% for error in form.password.errors %}
+        <p style="margin-left: 20px; color: red;">{{ error}}</p>
+    {% endfor %}
+  </div>
 
-    <div>
-      {{ form.remember_me() }}
-      {{ form.remember_me.label() }}
-    </div>
+  <div>
+    {{ form.remember_me.label()}}
+    {{ form.remember_me()}}
+  </div>
 
-    <p style="text-align: center;">{{ form.submit() }}</p>
+  <p>{{form.submit()}}</p>
 
-    <div style="text-align: center;">
-      <a href="{{ url_for('auth.register') }}">Register</a>
-    </div>
-  </form>
-</div>
+  <div>
+    <a href="{{url_for('auth.register')}}">register</a>
+  </div>
+
+</form>
+
+
 {% endblock %}

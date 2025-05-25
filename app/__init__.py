@@ -4,12 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+
+
 db = SQLAlchemy()
 migrate = Migrate()
 login = LoginManager()
 login.login_view = 'auth.login'
-login.login_message_category = 'warning'
-
 
 
 def create_app(class_config=Config):
@@ -24,16 +24,16 @@ def create_app(class_config=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.users import bp as users_bp
+    app.register_blueprint(users_bp)
+
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp)
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
 
-    from app.users import bp as users_bp
-    app.register_blueprint(users_bp)
-
     return app
 
 
-from app import models
+from app.models import User
