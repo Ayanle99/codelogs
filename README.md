@@ -28,7 +28,8 @@ This Flask blog app will include:
 | 3   | Blueprints       | ✅ Done     |
 | 4   | Database         | ✅ Done     |
 | 5   | Bootstrap        | ✅ Done     |
-| 6   | _Coming soon..._ | 🚧 In progress |
+| 6   | CRUD             | ✅ Done     |
+| 7   | _Coming soon..._ | 🚧 In progress |
 
 > Progress will be updated daily as the project develops.
 
