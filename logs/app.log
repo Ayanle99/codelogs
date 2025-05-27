@@ -1,0 +1,5 @@
+2025-05-27 17:16:49,422 - INFO - app - App startup
+2025-05-27 17:16:50,062 - INFO - app - App startup
+2025-05-27 17:16:59,730 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-27 17:17:06,038 - INFO - app.main.routes - About page accessed from IP: [IP ADDRESS]
+2025-05-27 17:17:07,574 - INFO - app.main.routes - User max logged out

@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-body-secondary">
+  <div class="col-lg-6 px-0">
+    <h1 class="display-4 fst-italic">
+      <a href="{{ url_for('users.user', username=current_user.username) }}" class="text-decoration-none link-info">{{ current_user.username}}</a>,  Welcome to my Flask App!
+    </h1>
+
+    <p class="lead my-3">
+      Welcome to my 100-day challenge of building a full-featured blog application using Flask — from absolute scratch.
+    </p>
+    <p class="lead mb-0">
+      <a href="{{ url_for('main.about') }}" class="text-body-emphasis fw-bold">Continue reading...</a>
+    </p>
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col-md-6">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-primary-emphasis">Books</strong>
+        <h3 class="mb-0">The River War</h3>
+        <div class="mb-1 text-body-secondary">Winston Churchill</div>
+        <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+        <a href="{{ url_for('main.about')}}" class="icon-link gap-1 icon-link-hover stretched-link"> Continue reading <svg class="bi" aria-hidden="true">
+            <use xlink:href="#chevron-right"></use>
+          </svg>
+        </a>
+      </div>
+      <div class="col-auto d-none d-lg-block">
+        <svg aria-label="Placeholder: Thumbnail" class="bd-placeholder-img " height="250" preserveAspectRatio="xMidYMid slice" role="img" width="200" xmlns="http://www.w3.org/2000/svg">
+          <title>Placeholder</title>
+          <rect width="100%" height="100%" fill="#55595c"></rect>
+          <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+      <div class="col p-4 d-flex flex-column position-static">
+        <strong class="d-inline-block mb-2 text-success-emphasis">Bus</strong>
+        <h3 class="mb-0">Route Title</h3>
+        <div class="mb-1 text-body-secondary">direction</div>
+        <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="icon-link gap-1 icon-link-hover stretched-link"> View Schedule<svg class="bi" aria-hidden="true">
+            <use xlink:href="#chevron-right"></use>
+          </svg>
+        </a>
+      </div>
+
+      <div class="col-auto d-none d-lg-block">
+        <svg
+          role="img"
+          aria-labelledby="post11Title"
+          class="bd-placeholder-img"
+          height="250"
+          width="200"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title id="post11Title">Post number 11</title>
+          <rect width="100%" height="100%" fill="#55595c"></rect>
+          <text
+            x="50%"
+            y="50%"
+            fill="#eceeef"
+            dy=".3em"
+            text-anchor="middle"
+            font-size="100"
+            font-family="Arial, sans-serif"
+            font-weight="bold">
+            11
+          </text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row g-5">
+    <div class="col-md-8">
+    <h3 class="pb-4 mb-4 fst-italic text-center">{{ current_user.username}}'s posts</h3>
+
+    {% if posts %}
+      <div class="container d-flex justify-content-center">
+        <div class="w-100 posts-container" style="max-width: 720px;">  {# Center container with limited width #}
+          {% for post in posts %}
+            <article class="blog-post mb-5 text-start">
+              <h2 class="display-6 link-body-emphasis mb-1">{{ post.title }}</h2>
+              <p class="blog-post-meta text-muted">
+                <time datetime="{{ post.timestamp.isoformat() }}">
+                  {{ post.timestamp.strftime('%B %d, %Y %H:%M') }}
+                </time>
+                · by
+                <a href="{{ url_for('users.user', username=post.author.username) }}" class="text-decoration-none">
+                  {{ post.author.username }}
+                </a>
+
+                <a href="{{ url_for('users.edit_post', post_id=post.id) }}" class="link-warning" style="margin-left: 1rem;" aria-label="Edit post titled {{ post.title }}">
+                  edit
+                </a>
+
+                <a href="{{ url_for('users.delete_post', post_id=post.id) }}" class="link-danger float-end">delete</a>
+
+              </p>
+
+              <p class="blog-post-meta text-muted">
+                {% if post.updated_at %}
+                  <span aria-label="Edited on">
+                      <small class="fst-italic">Edited</small>
+                      <span class="text-muted" aria-label="Edited on {{ post.updated_at.strftime('%B %d, %Y %H:%M') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                             class="bi bi-pencil-square" viewBox="0 0 16 16" role="img" aria-hidden="true">
+                          <title>Edited</title>
+                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706l-1.5 1.5-.707-.707 1.5-1.5a.5.5 0 0 1 .707 0z"/>
+                          <path d="M13.5 3.207l-1-1L4 10.707V12h1.293l8.207-8.207z"/>
+                          <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        <span class="visually-hidden">
+                          Edited on {{ post.updated_at.strftime('%B %d, %Y %H:%M') }}
+                        </span>
+                      </span>
+                    <time datetime="{{ post.updated_at.isoformat() }}">
+                      {{ post.updated_at.strftime('%B %d, %Y %H:%M') }}
+                    </time>
+                  </span>
+                {% endif %}
+              </p>
+
+
+              <p>{{ post.body }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="container text-center mt-5">
+        <p>
+          <a href="{{ url_for('users.create_post') }}" class="btn btn-outline-info fw-bold">
+            No content, want to add?
+          </a>
+        </p>
+      </div>
+    {% endif %}
+
+
+
+<form method="get" action="{{ url_for('main.index') }}" class="d-flex justify-content-center align-items-center gap-2 mt-3" style="flex-wrap: wrap;">
+  <nav class="blog-pagination d-flex justify-content-center" aria-label="Pagination">
+    {% if pagination.has_prev %}
+      <a class="btn btn-outline-primary rounded-pill me-2" href="{{ url_for('main.index', page=pagination.prev_num) }}">Newer</a>
+    {% else %}
+      <a class="btn btn-outline-secondary rounded-pill me-2 disabled" aria-disabled="true">Newer</a>
+    {% endif %}
+
+    {% if pagination.has_next %}
+      <a class="btn btn-outline-primary rounded-pill" href="{{ url_for('main.index', page=pagination.next_num) }}">Older</a>
+    {% else %}
+      <a class="btn btn-outline-secondary rounded-pill disabled" aria-disabled="true">Older</a>
+    {% endif %}
+  </nav>
+
+  <!-- Go to Page Form -->
+  <div class="input-group" style="max-width: 160px;">
+    <input type="number" name="page" min="1" max="{{ pagination.pages }}" class="form-control" placeholder="Go to page" aria-label="Page number">
+    <button type="submit" class="btn btn-outline-secondary">Go</button>
+  </div>
+</form>
+
+
+</div>
+
+
+<div class="col-md-4">
+<div class="position-sticky" style="top: 2rem;">
+<div class="p-4 mb-3 bg-body-tertiary rounded">
+  <h4 class="fst-italic">About</h4>
+  <p class="mb-0">
+    day 5 / 100 of our Flask App series.
+  </p>
+</div>
+<div>
+  <h4 class="fst-italic">Recent posts</h4>
+  <ul class="list-unstyled">
+    <li>
+      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+        <svg aria-hidden="true" class="bd-placeholder-img " height="96" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="#777"></rect>
+        </svg>
+        <div class="col-lg-8">
+          <h6 class="mb-0">Example blog post title</h6>
+          <small class="text-body-secondary">January 15, 2024</small>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+        <svg aria-hidden="true" class="bd-placeholder-img " height="96" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="#777"></rect>
+        </svg>
+        <div class="col-lg-8">
+          <h6 class="mb-0">This is another blog post title</h6>
+          <small class="text-body-secondary">January 14, 2024</small>
+        </div>
+      </a>
+    </li>
+    <li>
+      <a class="d-flex flex-column flex-lg-row gap-3 align-items-start align-items-lg-center py-3 link-body-emphasis text-decoration-none border-top" href="#">
+        <svg aria-hidden="true" class="bd-placeholder-img " height="96" preserveAspectRatio="xMidYMid slice" width="100%" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" fill="#777"></rect>
+        </svg>
+        <div class="col-lg-8">
+          <h6 class="mb-0">Longer blog post title: This one has multiple lines!</h6>
+          <small class="text-body-secondary">January 13, 2024</small>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>
+<div class="p-4">
+  <h4 class="fst-italic">Archives</h4>
+  <ol class="list-unstyled mb-0">
+    <li>
+      <a href="#">March 2021</a>
+    </li>
+    <li>
+      <a href="#">February 2021</a>
+    </li>
+    <li>
+      <a href="#">January 2021</a>
+    </li>
+    <li>
+      <a href="#">December 2020</a>
+    </li>
+    <li>
+      <a href="#">November 2020</a>
+    </li>
+    <li>
+      <a href="#">October 2020</a>
+    </li>
+    <li>
+      <a href="#">September 2020</a>
+    </li>
+    <li>
+      <a href="#">August 2020</a>
+    </li>
+    <li>
+      <a href="#">July 2020</a>
+    </li>
+    <li>
+      <a href="#">June 2020</a>
+    </li>
+    <li>
+      <a href="#">May 2020</a>
+    </li>
+    <li>
+      <a href="#">April 2020</a>
+    </li>
+  </ol>
+</div>
+<div class="p-4">
+  <h4 class="fst-italic">Elsewhere</h4>
+  <ol class="list-unstyled">
+    <li>
+      <a href="https://github.com/Ayanle99/codelogs/tree/day4">GitHub</a>
+    </li>
+    <li>
+      <a href="https://www.youtube.com/@theblindprogrammer">Youtube</a>
+    </li>
+    <li>
+      <a href="#">Hacker News</a>
+    </li>
+  </ol>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock content %}

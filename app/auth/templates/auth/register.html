@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center mt-3">
+  <div class="w-100" style="max-width: 400px;">
+
+    <!-- Aria live region for screen readers -->
+    <div class="visually-hidden" aria-live="polite" id="form-announcement">
+      Registration form loaded. Please fill in your details.
+    </div>
+
+    <!-- Focus anchor -->
+    <h2 class="text-center mb-4 display-6" id="register-heading" tabindex="-1">Register</h2>
+
+    <form method="POST" action="{{ url_for('auth.register') }}" aria-labelledby="register-heading">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.username(class="form-control", placeholder="Username", id="username", aria_label="Username", aria_describedby="usernameHelp") }}
+        {% for error in form.username.errors %}
+          <div id="usernameHelp" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.email(class="form-control", placeholder="Email", id="email", aria_label="Email", aria_describedby="emailHelp") }}
+        {% for error in form.email.errors %}
+          <div id="emailHelp" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password(class="form-control", placeholder="Password", id="password", aria_label="Password", aria_describedby="passwordHelp") }}
+        {% for error in form.password.errors %}
+          <div id="passwordHelp" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password2(class="form-control", placeholder="Confirm Password", id="password2", aria_label="Confirm Password", aria_describedby="password2Help") }}
+        {% for error in form.password2.errors %}
+          <div id="password2Help" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-outline-success">
+          {{ form.submit.label.text }}
+        </button>
+      </div>
+
+      <div class="text-center mt-3">
+        <a href="{{ url_for('auth.login') }}" class="text-decoration-none">
+          Already have an account? <strong>Login</strong>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Scroll and focus script -->
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const heading = document.getElementById('register-heading');
+    if (heading) {
+      heading.focus();
+      heading.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+</script>
+{% endblock %}
