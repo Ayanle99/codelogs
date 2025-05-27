@@ -1,9 +1,0 @@
-
-
-CRUD
-
-    - create post
-    - reat post
-    - update post
-    - delete post
-    - paginate
