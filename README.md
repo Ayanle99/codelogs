@@ -3,6 +3,9 @@
 
 Welcome to my 100-day challenge of building a full-featured blog application using Flask — from absolute scratch. As a blind developer, this journey is not only about building a technical project but also about embracing accessibility, discipline, and growth. Each day, I document progress with clean code and purpose.
 
+
+[The Blind Programmer on YouTube](https://www.youtube.com/@theblindprogrammer)
+
 ---
 
 ## 🚀 Project Overview
