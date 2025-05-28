@@ -1,0 +1,8 @@
+<article class="blog-post mb-5 text-start">
+  <h2 class="display-6 link-body-emphasis mb-1">{{ post.title }}</h2>
+  <p class="blog-post-meta text-muted">
+    {{ post.timestamp.strftime('%B %d, %Y %H:%M') }}
+    · by <a href="#" class="text-decoration-none">{{ post.author.username }}</a>
+  </p>
+  <p>{{ post.body }}</p>
+</article>

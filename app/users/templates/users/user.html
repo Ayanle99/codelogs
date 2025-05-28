@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container py-5 d-flex flex-column align-items-center" role="main" aria-labelledby="profileHeading" style="min-height: 80vh;">
+  <h1 id="profileHeading" class="mb-4 text-center">{{ user.username }}'s Profile</h1>
+  <div class="row w-100 justify-content-center" aria-describedby="profileDesc" style="max-width: 400px;">
+    <p id="profileDesc" class="visually-hidden">
+      User profile details including username and email
+    </p>
+
+    <div class="col-12 mb-3">
+      <div class="d-flex justify-content-between">
+        <strong>Username</strong>
+        <span>{{ user.username }}</span>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3">
+      <div class="d-flex justify-content-between">
+        <strong>Email</strong>
+        <span>{{ user.email }}</span>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row w-100 justify-content-center" aria-describedby="profileDesc" style="max-width: 400px;">
+    <ul class="user-list">
+      <li>
+        <h6>blogs</h6>
+        <p>120</p>
+      </li>
+    </ul>
+  </div>
+
+
+
+</div>
+
+{% endblock %}
