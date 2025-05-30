@@ -35,7 +35,7 @@ This Flask blog app will include:
 | 5   | Bootstrap              | ✅ Done     |
 | 6   | CRUD                   | ✅ Done     |
 | 7   | Logging                | ✅ Done     |
-| 8   | Circuler Import Error  | ✅ Done     |
+| 8   | Circular Import Error  | ✅ Done     |
 | 9   | User Profile Revisited | ✅ Done     |
 | 10  | _Coming soon..._       | 🚧 In progress |
 
