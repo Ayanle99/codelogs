@@ -1,0 +1,30 @@
+body {
+  background-color: #1a1a1a !important;
+
+}
+
+.hover-zoom:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 0 20px rgba(13, 110, 253, 0.5) !important;
+}
+
+.avatar:hover .position-absolute {
+    background-color: var(--bs-info) !important;
+    transform: translate(25%, 25%) scale(1.1) !important;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.bg-secondary {
+    background-color: #2d3748 !important;
+
+}
+
+.page-link:hover {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+
+}

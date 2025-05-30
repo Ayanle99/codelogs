@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="mb-4 text-center" id="pageTitle">Edit History for "{{ post.title }}"</h1>
+
+<div class="container" role="main" aria-labelledby="pageTitle">
+  <div class="row">
+    <!-- Left column (empty for spacing) -->
+    <div class="col-12 col-md-3" aria-hidden="true"></div>
+
+    <!-- Center column (main content) -->
+    <div class="col-12 col-md-6">
+
+      {% if edit_histories|length == 0 %}
+        <p class="text-muted text-center" role="alert" aria-live="polite">No edits have been made to this post.</p>
+      {% else %}
+        <section aria-label="Edit history list">
+          {% for edit in edit_histories %}
+            <article class="mb-4" tabindex="0" aria-labelledby="edit-header-{{ edit.id }}">
+              <h2 id="edit-header-{{ edit.id }}" class="h5">
+                Edited by {{ edit.editor.username }} on {{ edit.timestamp.strftime('%B %d, %Y %H:%M') }}
+              </h2>
+              <div style="background-color: rgb(48, 48, 48);" class="p-3 rounded">
+                <pre class="bg-dark p-3 text-white" style="white-space: pre-wrap; margin: 0;">{{ edit.diff }}</pre>
+              </div>
+            </article>
+          {% endfor %}
+        </section>
+      {% endif %}
+
+      <div class="mt-4 d-flex justify-content-center gap-2">
+        <a href="{{ url_for('users.edit_post', post_id=post.id) }}" class="btn btn-outline-warning" aria-label="Back to edit post">Back to Edit Post</a>
+        <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary" aria-label="Go to home page">Home</a>
+      </div>
+
+    </div>
+
+    <!-- Right column (empty for spacing) -->
+    <div class="col-12 col-md-3" aria-hidden="true"></div>
+  </div>
+</div>
+
+{% endblock %}
