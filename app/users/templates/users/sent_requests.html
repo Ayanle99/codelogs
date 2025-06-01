@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <!-- Left Column (Empty) -->
+    <div class="col-12 col-md-3"></div>
+
+    <!-- Center Column -->
+    <div class="col-12 col-md-6">
+      <div class="sent-requests-container">
+        <h1 class="page-title">Sent Requests</h1>
+
+        <div class="requests-grid">
+          {% if sent_requests|length > 0 %}
+            {% for request in sent_requests %}
+              <div class="card mb-4 shadow-sm">
+                <div class="card-header  text-white d-flex justify-content-between align-items-center bg-info"
+                     style="background: linear-gradient(to right, #ff7365, #a1c006, #2cd0fc);">
+                  <span>#{{ loop.index }}</span>
+                  <div class="status-indicator rounded-circle bg-success" style="width: 10px; height: 10px;"></div>
+                </div>
+
+                <div class="card-body bg-dark text-white">
+                  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                    <!-- Target -->
+                    <div class="d-flex align-items-center gap-3 flex-fill">
+                      <div class="avatar rounded-circle bg-danger text-white d-flex justify-content-center align-items-center"
+                           style="width: 50px; height: 50px; font-weight: bold;">
+                        {{ request.profile_owner.username|first|upper }}
+                      </div>
+                      <div>
+                        <h5 class="mb-0 text-info">{{ request.profile_owner.username }}</h5>
+                        <small class="text-muted">
+                          <a href="{{ url_for('users.user', username=request.profile_owner.username) }}"
+                             class="fst-italic text-decoration-none">requested profile</a>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center  text-white">
+                  <small>{{ request.timestamp.strftime('%B %d, %Y %H:%M') }}</small>
+                  <span class="text-success">{{ request.status }}
+                  </span>
+                  <form action="{{ url_for('users.retract_request') }}" method="post">
+                        {{ form.hidden_tag() }}
+                        <button class="btn btn-sm btn-outline-warning">cancel request</button>
+                  </form>
+                </div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state text-center my-5">
+              <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="48" height="48">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+              <h3 class="display-6 fw-bold mt-3">No requests sent yet</h3>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column (Empty) -->
+    <div class="col-12 col-md-3"></div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="{{ url_for('users.static', filename='css/requests.css') }}">
+
+{% endblock %}

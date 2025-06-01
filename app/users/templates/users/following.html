@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container d-flex flex-column align-items-center justify-content-center py-5">
+   <div class="w-100" style="max-width: 600px;">
+       <h1 class="text-center mb-5 text-gradient fw-bold display-6">{{ user.username }}'s Following</h1>
+
+       <div class="container mb-3">
+           <a href="#following-list" class="sr-only sr-only-focusable">Skip to following list</a>
+       </div>
+       {% set following_list = user.followed.all() %}
+
+       <div id="following-list" role="list" aria-label="List of people {{ user.username }} is following">
+           {% if following_list %}
+               {% for following in following_list %}
+                   <article class="user-card d-flex align-items-center p-4 mb-3 bg-dark rounded-4 shadow-lg border border-secondary position-relative overflow-hidden"
+                            role="listitem"
+                            aria-labelledby="user-{{ loop.index }}"
+                            tabindex="0">
+                       <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" aria-hidden="true"></div>
+
+                       <div class="position-relative d-flex align-items-center w-100">
+                           <div class="profile-image-wrapper position-relative me-4">
+                               <img src="{{ url_for('users.static', filename='thumbnails/' + following.thumbnail_url) }}"
+                                    alt="Profile picture of {{ following.username }}"
+                                    class="rounded-circle border border-3 border-light shadow"
+                                    style="width: 60px; height: 60px; object-fit: cover;"
+                                    loading="lazy">
+                               <div class="online-indicator position-absolute bottom-0 end-0 bg-success rounded-circle border border-2 border-dark"
+                                    style="width: 16px; height: 16px;"
+                                    aria-label="{{ following.username }} is online"
+                                    role="img"></div>
+                           </div>
+
+                           <div class="flex-grow-1">
+                               <a href="{{ url_for('users.user', username=following.username) }}"
+                                  class="text-decoration-none text-light"
+                                  aria-describedby="stats-{{ loop.index }}">
+                                   <h2 id="user-{{ loop.index }}" class="mb-1 fw-bold text-white h5">{{ following.username }}</h2>
+                               </a>
+                           </div>
+
+                           <div class="actions">
+                               {% if current_user.is_following(following) and following.is_following(current_user) %}
+                                   <form action="{{ url_for('users.unfollow', username=following.username) }}" method="post">
+                                       {{ form.hidden_tag() }}
+                                       <button class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 fw-semibold transition-all"
+                                               type="submit"
+                                               aria-label="You and {{ following.username }} are friends, want to Unfollow {{ following.username }}?">
+                                           &#128100;&#x2714;
+                                           Friends
+                                       </button>
+                                   </form>
+                               {% else %}
+                                   <button class="btn btn-outline-light btn-sm rounded-pill px-4 py-2 fw-semibold transition-all"
+                                           type="button"
+                                           aria-label="Following {{ following.username }}">
+                                       &#128100;&#x2714; Following
+                                   </button>
+                               {% endif %}
+                           </div>
+                       </div>
+                   </article>
+               {% endfor %}
+           {% else %}
+               <div class="text-center text-muted p-5" role="status" aria-live="polite">
+                   <p class="fs-5">{{ user.username }} is not following anyone yet.</p>
+               </div>
+           {% endif %}
+       </div>
+   </div>
+</div>
+
+<link href="{{ url_for('users.static', filename='css/following.css') }}" rel="stylesheet">
+{% endblock %}

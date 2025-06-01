@@ -1,0 +1,139 @@
+2025-05-29 14:39:42,047 - ERROR - app - Exception on /users/requests_received/ [GET]
+Traceback (most recent call last):
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/max/Documents/codelogs/day9/app/users/routes.py", line 162, in requests_received
+    return render_template(
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/max/Documents/codelogs/day9/app/users/templates/users/received_requests.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/max/Documents/codelogs/day9/app/templates/base.html", line 92, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/max/Documents/codelogs/day9/app/users/templates/users/received_requests.html", line 46, in block 'content'
+    <form method="post" action="{{ url_for('users.approve_request', username=request.requester.username) }}" class="d-inline">
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'app.users.models.ProfileViewRequest object' has no attribute 'sender'
+2025-05-29 14:39:52,095 - ERROR - app - Exception on /users/requests_received/ [GET]
+Traceback (most recent call last):
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask_login/utils.py", line 290, in decorated_view
+    return current_app.ensure_sync(func)(*args, **kwargs)
+  File "/Users/max/Documents/codelogs/day9/app/users/routes.py", line 162, in requests_received
+    return render_template(
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/templating.py", line 150, in render_template
+    return _render(app, template, context)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/flask/templating.py", line 131, in _render
+    rv = template.render(context)
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 1295, in render
+    self.environment.handle_exception()
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "/Users/max/Documents/codelogs/day9/app/users/templates/users/received_requests.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "/Users/max/Documents/codelogs/day9/app/templates/base.html", line 92, in top-level template code
+    {% block content %}{% endblock %}
+  File "/Users/max/Documents/codelogs/day9/app/users/templates/users/received_requests.html", line 46, in block 'content'
+    <form method="post" action="{{ url_for('users.approve_request', username=request.requester.username) }}" class="d-inline">
+  File "/Users/max/Documents/codelogs/day6/venv/lib/python3.10/site-packages/jinja2/environment.py", line 490, in getattr
+    return getattr(obj, attribute)
+jinja2.exceptions.UndefinedError: 'app.users.models.ProfileViewRequest object' has no attribute 'sender'
+2025-05-29 14:41:16,705 - INFO - app - App startup
+2025-05-29 14:41:17,309 - INFO - app - App startup
+2025-05-29 14:41:18,565 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 14:45:25,527 - INFO - app - App startup
+2025-05-29 14:46:45,125 - INFO - app - App startup
+2025-05-29 14:46:58,933 - INFO - app.main.routes - User max logged out
+2025-05-29 14:47:09,436 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 14:50:05,433 - INFO - app - App startup
+2025-05-29 14:50:34,144 - INFO - app - App startup
+2025-05-29 14:50:34,686 - INFO - app - App startup
+2025-05-29 14:50:35,437 - INFO - app.main.routes - User test logged out
+2025-05-29 14:51:31,576 - INFO - app.main.routes - User scotty accessed the index page (page 1)
+2025-05-29 14:52:11,520 - INFO - app.main.routes - User scotty logged out
+2025-05-29 14:52:32,989 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 14:54:50,459 - INFO - app.main.routes - User test logged out
+2025-05-29 14:55:06,212 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 14:55:27,430 - INFO - app.main.routes - User test logged out
+2025-05-29 14:55:34,505 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 14:56:38,579 - INFO - app - App startup
+2025-05-29 14:57:34,819 - INFO - app - App startup
+2025-05-29 14:57:35,414 - INFO - app - App startup
+2025-05-29 15:00:09,886 - INFO - app.main.routes - User max logged out
+2025-05-29 15:00:16,045 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 15:02:18,595 - INFO - app - App startup
+2025-05-29 15:02:52,444 - INFO - app - App startup
+2025-05-29 15:02:59,813 - INFO - app - App startup
+2025-05-29 15:03:00,406 - INFO - app - App startup
+2025-05-29 15:04:27,816 - INFO - app - App startup
+2025-05-29 15:04:45,143 - INFO - app - App startup
+2025-05-29 15:04:50,618 - INFO - app - App startup
+2025-05-29 15:05:36,191 - INFO - app - App startup
+2025-05-29 15:05:36,719 - INFO - app - App startup
+2025-05-29 15:05:37,437 - INFO - app.main.routes - User test logged out
+2025-05-29 15:05:43,297 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 15:07:07,081 - INFO - app.main.routes - User max logged out
+2025-05-29 15:08:13,214 - INFO - app.main.routes - User paul accessed the index page (page 1)
+2025-05-29 15:09:00,522 - INFO - app.main.routes - User paul logged out
+2025-05-29 15:09:04,986 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 15:15:27,114 - INFO - app - App startup
+2025-05-29 15:16:12,671 - INFO - app - App startup
+2025-05-29 15:16:13,200 - INFO - app - App startup
+2025-05-29 15:16:25,852 - INFO - app - App startup
+2025-05-29 15:16:26,411 - INFO - app - App startup
+2025-05-29 15:16:27,726 - INFO - app.main.routes - User test accessed the index page (page 1)
+2025-05-29 15:17:56,558 - INFO - app.main.routes - User test logged out
+2025-05-29 15:18:05,627 - INFO - app.main.routes - User paul accessed the index page (page 1)
+2025-05-29 15:18:37,947 - INFO - app.main.routes - User paul logged out
+2025-05-29 15:18:43,469 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 15:29:09,465 - INFO - app - App startup
+2025-05-29 15:30:13,213 - INFO - app - App startup
+2025-05-29 16:17:25,387 - INFO - app - App startup
+2025-05-29 16:17:32,856 - INFO - app - App startup
+2025-05-29 16:17:37,057 - INFO - app - App startup
+2025-05-29 16:21:55,169 - INFO - app - App startup
+2025-05-29 16:21:55,701 - INFO - app - App startup
+2025-05-29 16:28:52,720 - INFO - app - App startup
+2025-05-29 16:28:53,348 - INFO - app - App startup
+2025-05-29 16:42:35,121 - INFO - app - App startup
+2025-05-29 16:42:40,033 - INFO - app - App startup
+2025-05-29 16:59:00,209 - INFO - app - App startup
+2025-05-29 17:00:24,872 - INFO - app - App startup
+2025-05-29 17:00:25,421 - INFO - app - App startup
+2025-05-29 17:00:31,169 - INFO - app.main.routes - User max logged out
+2025-05-29 17:00:37,387 - INFO - app.main.routes - User scotty accessed the index page (page 1)
+2025-05-29 17:16:22,362 - INFO - app.main.routes - User scotty logged out
+2025-05-29 17:16:26,614 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 17:16:42,790 - INFO - app.main.routes - User max logged out
+2025-05-29 17:16:48,328 - INFO - app.main.routes - User scotty accessed the index page (page 1)
+2025-05-29 17:16:58,082 - INFO - app.main.routes - User scotty logged out
+2025-05-29 17:17:03,355 - INFO - app.main.routes - User max accessed the index page (page 1)
+2025-05-29 17:19:31,790 - INFO - app - App startup
+2025-05-29 17:20:24,627 - INFO - app - App startup
+2025-05-29 17:21:31,464 - INFO - app - App startup
+2025-05-29 17:24:09,018 - INFO - app - App startup
+2025-05-29 17:24:18,981 - INFO - app - App startup
+2025-05-29 17:24:23,902 - INFO - app - App startup
+2025-05-29 17:29:44,073 - INFO - app - App startup

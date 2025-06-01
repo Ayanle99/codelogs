@@ -1,0 +1,94 @@
+body {
+  background-color: #1a1a1a !important;
+
+}
+
+.hover-zoom:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 0 20px rgba(13, 110, 253, 0.5) !important;
+}
+
+.avatar:hover .position-absolute {
+    background-color: var(--bs-info) !important;
+    transform: translate(25%, 25%) scale(1.1) !important;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    transition: all 0.3s ease;
+}
+
+.bg-secondary {
+    background-color: #2d3748 !important;
+
+}
+
+.page-link:hover {
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+
+}
+
+
+.bg-gradient {
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn:hover {
+   transform: translateY(-2px);
+   transition: all 0.3s ease;
+   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.btn-outline-danger:hover .btn-text {
+   opacity: 0;
+   transition: opacity 0.3s ease;
+}
+
+.btn-outline-danger:hover .btn-hover-text {
+   opacity: 1 !important;
+   transition: opacity 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+   background-color: #dc3545;
+   border-color: #dc3545;
+   color: white;
+}
+
+.btn-primary:hover {
+   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+   border-color: transparent;
+}
+
+.btn-outline-info:hover {
+   background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+   border-color: transparent;
+   color: white;
+}
+
+/* Friends badge animation */
+.badge {
+   animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+   0% { transform: scale(1); }
+   50% { transform: scale(1.05); }
+   100% { transform: scale(1); }
+}
+
+/* Button focus states for accessibility */
+.btn:focus {
+   outline: 3px solid rgba(0, 123, 255, 0.5);
+   outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+   .btn, .badge {
+       animation: none;
+       transition: none;
+       transform: none;
+   }
+}

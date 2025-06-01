@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+
+<link href="{{ url_for('users.static', filename='css/user.css') }}" rel="stylesheet">
+<link href="{{ url_for('users.static', filename='css/username_search.css') }}" rel="stylesheet">
+<style>
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+
+</style>
+
+<div class="container-fluid py-4 bg-dark text-white min-vh-100">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-2" aria-hidden="true"></div>
+    <main class="col-12 col-md-8" role="main" aria-label="User profile and posts">
+
+        <div class="container d-flex justify-content-center py-4">
+            <div class="search-wrapper position-relative" style="max-width: 500px; width: 100%;">
+                <form role="search" method="get" action="{{ url_for('users.search') }}" aria-label="User search form" id="searchForm">
+                    <label for="usernameSearch" class="visually-hidden">Search for users by username</label>
+
+                    <div class="search-container bg-dark rounded-pill shadow-lg border border-secondary position-relative overflow-hidden">
+                        <!-- Search icon -->
+                        <div class="position-absolute top-50 start-0 translate-middle-y ps-4 text-muted" aria-hidden="true">
+                            <span>🔍</span>
+                        </div>
+
+                        <!-- Input field -->
+                        <input type="text"
+                               class="form-control bg-transparent border-0 text-light ps-5 pe-5 py-3 rounded-pill search-input"
+                               id="usernameSearch"
+                               name="username"
+                               placeholder="Search users..."
+                               autocomplete="off"
+                               aria-describedby="search-instructions search-status"
+                               aria-expanded="false"
+                               aria-haspopup="listbox"
+                               role="combobox"
+                               aria-activedescendant="">
+
+                        <!-- Submit/search button -->
+                        <button type="submit"
+                                class="btn position-absolute top-50 end-0 translate-middle-y me-4 p-1 rounded-circle"
+                                aria-label="Submit search">
+                            <span aria-hidden="true">➡</span>
+                        </button>
+                    </div>
+
+                    <!-- Screen reader instructions -->
+                    <div id="search-instructions" class="visually-hidden">
+                        Type to search for users. Use arrow keys to navigate results when available.
+                    </div>
+
+                    <!-- Status for screen readers -->
+                    <div id="search-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+                </form>
+
+                <!-- Suggestions container -->
+                <div class="search-results position-absolute w-100 mt-2 bg-dark rounded-4 shadow-lg border border-secondary d-none"
+                     id="search-results"
+                     role="listbox"
+                     aria-label="Search results"
+                     style="max-height: 300px; overflow-y: auto; z-index: 1000;">
+                    <!-- JavaScript can dynamically populate results here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Where user details will be injected -->
+        <div class="container user-info-restults" aria-live="polite" aria-atomic="true"></div>
+
+    </main>
+    <div class="col-12 col-md-2" aria-hidden="true"></div>
+  </div>
+</div>
+
+<script src="{{ url_for('users.static', filename='js/user.js') }}"></script>
+<script src="{{ url_for('users.static', filename='js/username_search.js')}}"></script>
+{% endblock %}
