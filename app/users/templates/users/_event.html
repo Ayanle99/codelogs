@@ -1,0 +1,21 @@
+<div class="d-flex align-items-center">
+    <img src="{{ url_for('users.static', filename='thumbnails/' + event.follower.thumbnail_url) }}"
+     alt="{{ event.follower.username }}'s avatar"
+     class="rounded-circle me-3 border border-2 border-light"
+     width="48" height="48"
+     style="object-fit: cover;">
+<div>
+    <h6 class="mb-1 text-light fw-bold">
+        <a href="{{ url_for('users.user', username=event.follower.username) }}"
+           class="text-decoration-none text-primary">
+          {{ event.follower.username }}
+        </a>
+    </h6>
+    <small class="text-muted">{{ event.action }}</small>
+    </div>
+    </div>
+    <div class="text-end">
+    <small class="text-muted d-block">{{ event.timestamp.strftime('%b %d') }}</small>
+    <small class="text-muted">{{ event.timestamp.strftime('%H:%M') }}</small>
+    </div>
+</div>

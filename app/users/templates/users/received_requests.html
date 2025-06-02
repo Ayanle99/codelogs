@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12 col-md-3"></div>
+      <div class="col-12 col-md-6">
+        <div class="sent-requests-container">
+          <h1 class="page-title">Requests Received</h1>
+            <div class="requests-grid">
+              {% if requests_received|length > 0 %}
+                 {% for request in requests_received %}
+                    <div class="card mb-4 shadow-sm" id="request-card{{ loop.index }}">
+                        <div class="card-header text-white d-flex justify-content-between align-items-center bg-info"
+                             style="background: linear-gradient(to right, #ff81a3, #2cfb07, #2cd0fc);">
+                          <span>#{{ loop.index }}</span>
+                          <div class="status-indicator rounded-circle bg-success" style="width: 10px; height: 10px;"></div>
+                        </div>
+
+                        <div class="card-body bg-dark text-white">
+                          <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                            <!-- Target -->
+                            <div class="d-flex align-items-center gap-3 flex-fill">
+                              <div class="avatar rounded-circle bg-danger text-white d-flex justify-content-center align-items-center"
+                                   style="width: 50px; height: 50px; font-weight: bold;">
+                                {{ request.requester.username|first|upper }}
+                              </div>
+                              <div>
+                                <h5 class="mb-0 text-info">{{ request.requester.username }}</h5>
+                                <small class="text-muted">
+                                  <a href="{{ url_for('users.user', username=request.requester.username) }}"
+                                     class="fst-italic text-decoration-none">requested profile</a>
+                                </small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="card-footer d-flex justify-content-between align-items-center  text-white">
+                          <small>{{ request.timestamp.strftime('%B %d, %Y %H:%M') }}</small>
+                          <span class="text-muted">
+                              {% if request.approved %}
+                                  <p class="text-success status_approved">Approved!</p>
+                              {% else %}
+                                  <form method="post" action="{{ url_for('users.approve_request', username=request.requester.username) }}" class="d-inline">
+                                        {{ form.hidden_tag() }}
+                                        <button type="submit" class="btn btn-link link-info text-decoration-none p-0">approve?</button>
+                                  </form>
+                              {% endif %}
+                          </span>
+                          {% if request.approved %}
+                              <form method="post" action="{{ url_for('users.reject_request', username=request.requester.username) }}">
+                                   {{ form.hidden_tag() }}
+                                   <button class="btn btn-sm btn-outline-danger">reject</button>
+                              </form>
+                          {% else %}
+                            {% if request.ignored %}
+                                <p class="text-warning fw-bold">ignored</p>
+                            {% else %}
+                                <form method="post" action="{{ url_for('users.ignore_request', username=request.requester.username) }}">
+                                      {{ form.hidden_tag() }}
+                                      <button class="btn btn-sm btn-outline-warning">ignore</button>
+                                </form>
+                            {% endif %}
+                          {% endif %}
+                        </div>
+                      </div>
+
+                 {% endfor %}
+              {% endif%}
+              {% if requests_received|length == 0 %}
+                <div class="empty-state text-center my-5">
+                  <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="48" height="48">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
+                  <h3 class="display-6 fw-bold mt-3">No new requests yet</h3>
+                </div>
+              {% endif%}
+            </div>
+        </div>
+      </div>
+    <div class="col-12 col-md-3"></div>
+  </div>
+</div>
+<link rel="stylesheet" href="{{ url_for('users.static', filename='css/requests.css') }}">
+<script src="{{ url_for('users.static', filename='js/requests.js') }}"></script>
+{% endblock %}

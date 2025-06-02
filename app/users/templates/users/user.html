@@ -1,0 +1,454 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <link href="{{ url_for('users.static', filename='css/user.css') }}" rel="stylesheet">
+  <link href="{{ url_for('users.static', filename='css/username_search.css') }}" rel="stylesheet">
+
+
+  <div class="container-fluid py-4 bg-dark text-white min-vh-100">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-2" aria-hidden="true"></div>
+      <main class="col-12 col-md-8" role="main" aria-label="User profile and posts">
+
+        <div class="container d-flex justify-content-center">
+          <a href="{{ url_for('users.user', username=current_user.username) }}" class="link-info text-decoration-none"
+          aria-label="{{ current_user.username }}, current logged in user, click this link to go to their user page.">
+            {{ current_user.username }}
+          </a>
+          <span class="ms-2">(logged in user)</span>
+        </div>
+
+          <div class="container d-flex justify-content-center py-4">
+              <div class="search-wrapper position-relative" style="max-width: 500px; width: 100%;">
+                  <form role="search" method="get" action="" id="searchForm">
+                      <label for="usernameSearch" class="visually-hidden">Search for users by username</label>
+
+                      <div class="search-container bg-dark rounded-pill shadow-lg border border-secondary position-relative overflow-hidden">
+                          <!-- Search icon -->
+                          <div class="position-absolute top-50 start-0 translate-middle-y ps-4 text-muted" aria-hidden="true">
+                              <span>🔍</span>
+                          </div>
+
+                          <!-- Input field -->
+                          <input type="text"
+                                 class="form-control bg-transparent border-0 text-light ps-5 pe-5 py-3 rounded-pill search-input"
+                                 id="usernameSearch"
+                                 name="username"
+                                 placeholder="Search users..."
+                                 autocomplete="off"
+                                 aria-describedby="search-instructions search-status"
+                                 aria-expanded="false"
+                                 aria-haspopup="listbox"
+                                 role="combobox"
+                                 aria-activedescendant="">
+
+                          <!-- Submit/search button -->
+                          <button type="submit"
+                                  class="btn position-absolute top-50 end-0 translate-middle-y me-4 p-1 rounded-circle"
+                                  aria-label="Submit search">
+                              <span aria-hidden="true">➡</span>
+                          </button>
+                      </div>
+
+                      <!-- Screen reader instructions -->
+                      <div id="search-instructions" class="visually-hidden">
+                          Type to search for users. Use arrow keys to navigate results when available.
+                      </div>
+
+                      <!-- Status for screen readers -->
+                      <div id="search-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+                  </form>
+
+                  <!-- Suggestions container -->
+                  <div class="search-results position-absolute w-100 mt-2 bg-dark rounded-4 shadow-lg border border-secondary d-none"
+                       id="search-results"
+                       role="listbox"
+                       aria-label="Search results"
+                       style="max-height: 300px; overflow-y: auto; z-index: 1000;">
+                      <!-- JavaScript can dynamically populate results here -->
+                  </div>
+              </div>
+          </div>
+
+          <div class="container user-info-restults" aria-live="polite" aria-atomic="true">
+               <article class="bg-dark text-white p-4 rounded  border-secondary" tabindex="-1">
+          <header class="container py-4 user-info">
+            <div class="row text-center text-md-start justify-content-center">
+
+              <!-- Avatar and Button Section - Centered -->
+              <div class="col-12 d-flex justify-content-center mb-4">
+                <form method="POST" enctype="multipart/form-data" action="{{ url_for('users.upload_profile_pic')}}">
+                  {{ profile_form.hidden_tag() }}
+
+                  <div class="d-flex align-items-center justify-content-center p-4 bg-secondary bg-opacity-25 rounded-4 shadow-lg border border-secondary">
+                    <!-- Avatar on the left -->
+                    <div class="flex-shrink-0 me-4">
+                      <figure class="avatar position-relative m-0" style="cursor: pointer;" onclick="document.getElementById('picInput').click();">
+                        <div class="position-relative">
+                          <img id="profilePic"
+                               src="{{ url_for('users.static', filename='thumbnails/' + user.thumbnail_url) }}"
+                               alt="User Avatar"
+                               class="rounded-circle border border-3 border-light shadow-lg hover-zoom"
+                               width="120"
+                               height="120"
+                               style="object-fit: cover; transition: all 0.3s ease;">
+                          <!-- Camera overlay icon -->
+                          <div class="position-absolute bottom-0 end-0 bg-primary rounded-circle p-2 shadow-lg border border-2 border-dark" style="transform: translate(25%, 25%);">
+                            <i class="fas fa-camera text-white" style="font-size: 0.9rem;"></i>
+                          </div>
+                        </div>
+                        {% if current_user == user %}
+                        <figcaption class="visually-hidden">Profile picture of {{ user.username }}</figcaption>
+                          {{ profile_form.picture(id="picInput", style="display: none;", accept="image/*") }}
+                        </figure>
+                        {% endif%}
+                    </div>
+
+                    <!-- Submit button on the right -->
+                    {% if current_user == user %}
+                      <div class="flex-shrink-0">
+                        {{ profile_form.submit(class_="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg fw-bold") }}
+                      </div>
+                    {% endif%}
+                  </div>
+                </form>
+              </div>
+
+              <section class="col-12 mb-3">
+                <ul class="nav nav-tabs nav-dark bg-dark mt-3 mb-3" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active text-light" id="followers-tab" data-bs-toggle="tab" data-bs-target="#followers-tab-pane" type="button" role="tab" aria-controls="followers-tab-pane" aria-selected="true">Recent Followers</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link text-light" id="following-tab" data-bs-toggle="tab" data-bs-target="#following-tab-pane" type="button" role="tab" aria-controls="following-tab-pane" aria-selected="false">Recent Following</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link text-light" id="unfollowed-tab" data-bs-toggle="tab" data-bs-target="#unfollowed-tab-pane" type="button" role="tab" aria-controls="unfollowed-tab-pane" aria-selected="false">Recent Unfollowed</button>
+                      </li>
+                    </ul>
+
+                    <!-- Tab panes with dark theme -->
+                    <div class="tab-content bg-dark text-light" id="myTabContent">
+                      <div class="tab-pane fade show active" id="followers-tab-pane" role="tabpanel" aria-labelledby="followers-tab" tabindex="0">
+                        <div class="p-4">
+                          <h4 class="text-primary">Recent Followers</h4>
+                          {% if user.recent_followers() %}
+                              {% for event in user.recent_followers() %}
+                                  <li class="list-group-item d-flex justify-content-between align-items-center mb-2" role="listitem">
+                                      <div class="d-flex align-items-center gap-2">
+                                          <img
+                                              src="{{ url_for('users.static', filename='thumbnails/' ~ event.follower.thumbnail_url) }}"
+                                              alt="{{ event.follower.username }}'s profile picture"
+                                              class="rounded-circle me-2"
+                                              width="32" height="32"
+                                              aria-hidden="true"
+                                          >
+                                          <strong class="me-1">{{ event.follower.username }}</strong>
+                                          <span>followed</span>
+                                          <strong>{{ 'you' if current_user == user else user.username  }}</strong>
+                                      </div>
+                                      <small class="text-muted" aria-label="Follower at">{{ moment(event.timestamp).fromNow() }}</small>
+                                  </li>
+                              {% endfor %}
+
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="following-tab-pane" role="tabpanel" aria-labelledby="following-tab" tabindex="0">
+                        <div class="p-4">
+                          {% if user.recent_following() %}
+                                <div class="card shadow-sm mb-4">
+                                    <div cla  ss="card-header bg-secondary text-white">
+                                        <h5 class="mb-0">Recent Following by {{ user.username }}</h5>
+                                    </div>
+                                    <ul class="list-group list-group-flush" role="list">
+                                      {% for event in user.recent_following() %}
+                                          <li class="list-group-item d-flex justify-content-between align-items-center" role="listitem">
+                                              <div class="d-flex align-items-center gap-2">
+                                                  <strong class="me-1">you</strong>
+                                                  <span>followed</span>
+                                                  <img
+                                                      src="{{ url_for('users.static', filename='thumbnails/' ~ event.followed.thumbnail_url) }}"
+                                                      alt="{{ event.followed.username }}'s profile picture"
+                                                      class="rounded-circle ms-2 me-2"
+                                                      width="32" height="32"
+                                                      aria-hidden="true"
+                                                  >
+                                                  <strong>{{ event.followed.username }}</strong>
+                                              </div>
+                                              <small class="text-muted" aria-label="Followed at">{{ moment(event.timestamp).fromNow() }}</small>
+                                          </li>
+                                      {% endfor %}
+                                  </ul>
+
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info" role="alert">
+                                    {{ user.username }} hasn't followed anyone recently.
+                                </div>
+                            {% endif %}
+
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="unfollowed-tab-pane" role="tabpanel" aria-labelledby="unfollowed-tab" tabindex="0">
+                        <div class="p-4">
+                          <h4 class="text-primary">Recent Unfollowed</h4>
+                          {% if user.recent_unfollowed_by_user() %}
+                            <div class="activity-feed m-0 bg-transparent shadow-none">
+                              {% for event in user.recent_unfollowed_by_user() %}
+                                <div class="activity-card">
+                                  <div class="activity-content">
+                                    <div class="activity-icon">
+                                      <img src="{{ url_for('users.static', filename='thumbnails/' + event.followed.thumbnail_url) }}"
+                                           alt="{{ event.followed.username }} profile picture"
+                                           class="rounded-circle"
+                                           width="40"
+                                           height="40"
+                                           style="object-fit: cover; border: 2px solid #dee2e6;">
+                                    </div>
+                                    <div class="activity-details">
+                                      <p class="activity-text">
+                                        {{ user.username }} unfollowed <strong class="username">@{{ event.followed.username }}</strong>
+                                      </p>
+                                      <small class="activity-time text-muted">
+                                        {{ moment(event.timestamp).fromNow() }}
+                                      </small>
+                                    </div>
+                                  </div>
+                                </div>
+                              {% endfor %}
+                            </div>
+                          {% else %}
+                            <p class="text-muted">No recent unfollows</p>
+                          {% endif %}
+                    </div>
+
+              </section>
+
+              <!-- Username, Stats, Bio -->
+              <section class="col-12 mb-4" aria-labelledby="profile-header">
+                <div class="d-flex flex-column align-items-center h-100">
+
+                  <div class="d-flex flex-column flex-md-row align-items-center justify-content-between w-100 mb-4 p-3 bg-secondary bg-opacity-25 rounded-3">
+                    <h2 id="profile-header" class="fw-bold mb-2 mb-md-0 text-light display-6">
+                      {% if current_user == user %}
+                         You
+                      {% else %}
+                        {{ user.username }}
+                      {% endif%}
+
+                    </h2>
+
+                    {% if user.is_online %}
+                      <h6 class="display-6 fw-bold" aria-label="{{user.username}} is online">
+                        <span style="color: green;" class="text-center">&#9679; Online</span>
+                      </h6>
+                    {% else %}
+                      <h6 class="display-6 fw-bold" aria-label="{{user.username}} is offline.">
+                          <span style="color: red;"  class="text-center">&#9679; Offline</span>
+                      </h6>
+                    {% endif %}
+
+                    {% if user != current_user %}
+                      <form method="post" action="{{ url_for('users.follow', username=user.username)}}" aria-label="Follow user form">
+                        {{ form.hidden_tag() }}
+                        <button type="submit" class="btn btn-outline-primary btn-lg px-4 py-2 rounded-pill fw-bold" aria-pressed="false">
+                          Follow {{ user.username }}
+                        </button>
+                      </form>
+                    {% else %}
+                      <a href="{{ url_for('users.edit_profile') }}"
+                         class="btn btn-outline-info btn-lg px-4 py-2 rounded-pill fw-bold text-decoration-none"
+                         aria-label="Edit your profile">Edit Profile</a>
+                    {% endif %}
+
+                  </div>
+                  <div class="stats card shadow-sm border-0 p-4 my-4 bg-dark text-light w-100" role="list" aria-label="{{ user.username}}'s mutuals section ">
+                    {% if current_user != user %}
+                      {% if current_user.mutuals(user)  %}
+                      <h5 class="mb-3 text-center text-primary">
+                        You and {{ user.username }} both follow:
+                      </h5>
+                      <ul class="list-group list-group-flush">
+                        {% for mutual in current_user.mutuals(user) %}
+                        <a href="{{ url_for('users.user', username=mutual.username) }}" class="link-white text-decoration-none">
+                          <li class="list-group-item d-flex align-items-center gap-3">
+                            <img
+                              src="{{ url_for('users.static', filename='thumbnails/' + mutual.thumbnail_url) }}"
+                              alt="{{ mutual.username }}'s profile picture"
+                              class="rounded-circle mutual-avatar"
+                            >
+                            <span class="fw-semibold">{{ mutual.username }}</span>
+                          </li>
+                        </a>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p class="text-muted text-center m-0">
+                        You and {{ user.username }} have no mutual followings.
+                      </p>
+                    {% endif %}
+                  {% endif %}
+
+
+
+
+                  <div class="stats d-flex justify-content-center gap-5 my-4 p-4 bg-secondary bg-opacity-25 rounded-3 w-100" role="list" aria-label="User statistics">
+                    <div class="text-center" role="listitem">
+                      <strong class="d-block display-5 text-primary">{{ user.posts.count() }}</strong>
+                      <p class="mb-0 text-muted fs-5">posts</p>
+                    </div>
+                    <div class="text-center" role="listitem">
+                      <a href="{{url_for('users.following', username=user.username)}}" class="text-decoration-none link-primary">
+                        <strong class="d-block display-5 text-primary">{{user.get_following_count}}</strong>
+                      </a>
+                      <p class="mb-0 text-muted fs-5">following</p>
+                    </div>
+                    <div class="text-center" role="listitem">
+                      <a href="{{url_for('users.followers', username=user.username)}}" class="text-decoration-none link-primary">
+                        <strong class="d-block display-5 text-primary">{{user.get_followers_count}}</strong>
+                      </a>
+                      <p class="mb-0 text-muted fs-5">followers</p>
+                    </div>
+                  </div>
+
+                  <!-- Bio -->
+                  <section class="bio mt-3 w-100 p-4 bg-secondary bg-opacity-25 rounded-3" aria-label="User biography">
+                    {% if user.bio %}
+                      <p class="lead text-center px-3 mb-2 mt-2 text-light fs-4">{{ user.bio }}</p>
+                    {% else %}
+                      <p class="lead text-center px-3 mt-2 mb-2 text-muted fs-4">No bio yet
+                        {% if user == current_user %}
+                          <a href="{{ url_for('users.edit_profile') }}" class="link-info px-2 fw-bold" aria-label="Add your bio">add bio</a>
+                        {% endif %}
+                      </p>
+                    {% endif %}
+                  </section>
+
+                  <div class="container p-3 mt-3 bg-secondary bg-opacity-25 rounded-3 text-center" aria-live="polite" aria-atomic="true">
+                    <p class="user-joined text-muted fs-5" data-joined="{{ user.created_at.isoformat() }}">
+                      Joined on {{ user.created_at.strftime('%B %d, %Y') }}
+                    </p>
+                  </div>
+
+                  {% if user == current_user %}
+                    <form method="POST" action="{{ url_for('users.set_account_to_private', username=user.username) }}"
+                          class="mt-4 p-4 bg-secondary bg-opacity-25 rounded-3 w-100" aria-label="Set account privacy form">
+                      {{ form.csrf_token }}
+                      <div class="form-check form-switch d-flex justify-content-center align-items-center">
+                        <input class="form-check-input me-3" type="checkbox" id="isPrivate" name="is_private" value="true"
+                          {% if user.is_private %}checked{% endif %}
+                          onchange="this.form.submit()"
+                          aria-checked="{{ 'true' if user.is_private else 'false' }}"
+                          style="transform: scale(1.5);">
+                        <label class="form-check-label fs-5 fw-bold" for="isPrivate">Private Profile</label>
+                      </div>
+
+                      <nav class="d-flex justify-content-center gap-4 mt-3" aria-label="Profile requests navigation">
+                        <a href="{{ url_for('users.sent_requests') }}" class="btn btn-outline-info rounded-pill px-4" role="link">Requests Sent</a>
+                        <a href="{{ url_for('users.requests_received') }}" class="btn btn-outline-warning rounded-pill px-4" role="link">Requests Received</a>
+                      </nav>
+                    </form>
+                  {% endif %}
+
+                </div>
+              </section>
+            </div>
+          </header>
+
+          <section class="container my-5" aria-label="User posts">
+            <div class="container d-flex justify-content-center align-items-center p-4 bg-secondary bg-opacity-25 rounded-3 mb-4" style="height: 120px;">
+              <a href="{{ url_for('users.create_post') }}"
+                 class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-lg"
+                 role="button"
+                 aria-label="Add new post">
+                 <i class="fas fa-plus me-2"></i>Add New Post
+              </a>
+            </div>
+
+            {% if posts.items %}
+              {% for post in posts.items %}
+                <article class="border border-secondary rounded-3 p-4 mb-4 bg-secondary bg-opacity-25 text-white shadow-lg"
+                         tabindex="0"
+                         aria-labelledby="post-title-{{ post.id }}"
+                         aria-describedby="post-desc-{{ post.id }}">
+                  <h4 id="post-title-{{ post.id }}" class="mb-2 text-primary fs-3">{{ post.title }}</h4>
+                  <small class="text-muted fs-6">By {{ post.author.username }} on {{ post.timestamp.strftime("%B %d, %Y") }}</small>
+                  <p id="post-desc-{{ post.id }}" class="mt-3 mb-3 fs-5 text-light">{{ post.body[:100] }}{% if post.body|length > 100 %}...{% endif %}</p>
+                  <div class="mt-4 d-flex justify-content-between align-items-center">
+                    <div>
+                      <a href="{{ url_for('users.edit_post', post_id=post.id) }}"
+                         class="btn btn-outline-warning me-3 rounded-pill px-3"
+                         role="button"
+                         aria-label="Edit post titled {{ post.title }}">Edit</a>
+                      <a href="{{ url_for('users.delete_post', post_id=post.id) }}"
+                         class="btn btn-outline-danger rounded-pill px-3"
+                         role="button"
+                         aria-label="Delete post titled {{ post.title }}">Delete</a>
+                    </div>
+                    {% if post.is_edited %}
+                      <small class="text-muted fst-italic">Edited on {{ post.updated_at.strftime("%B %d, %Y %H:%M") }}</small>
+                    {% endif %}
+                  </div>
+                </article>
+              {% endfor %}
+            {% else %}
+              <p class="text-muted text-center fs-4 p-4">No posts yet.</p>
+            {% endif %}
+
+            <!-- Pagination -->
+            {% if posts.items %}
+              <nav aria-label="Page navigation" class="mt-5">
+                <ul class="pagination justify-content-center align-items-center">
+                  <li class="page-item {% if not posts.has_prev %}disabled{% endif %}">
+                    <a class="page-link bg-secondary border-secondary text-light rounded-pill px-4 me-2"
+                       href="{% if posts.has_prev %}{{ url_for('users.user', username=user.username, page=posts.prev_num) }}{% else %}#{% endif %}"
+                       tabindex="-1" aria-disabled="{% if not posts.has_prev %}true{% else %}false{% endif %}">Previous</a>
+                  </li>
+
+                  <li class="page-item mx-3">
+                    <form class="d-flex" method="get" action="{{ url_for('users.user', username=user.username) }}">
+                      <label for="page-input" class="visually-hidden">Page number</label>
+                      <input id="page-input" type="number" min="1" max="{{ posts.pages }}" name="page"
+                             class="form-control bg-secondary border-secondary text-light"
+                             placeholder="Page #" style="width: 100px;" required>
+                      <button class="btn btn-primary ms-2 rounded-pill px-3" type="submit">Go</button>
+                    </form>
+                  </li>
+
+                  <li class="page-item {% if not posts.has_next %}disabled{% endif %}">
+                    <a class="page-link bg-secondary border-secondary text-light rounded-pill px-4 ms-2"
+                       href="{% if posts.has_next %}{{ url_for('users.user', username=user.username, page=posts.next_num) }}{% else %}#{% endif %}"
+                       aria-disabled="{% if not posts.has_next %}true{% else %}false{% endif %}">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            {% endif %}
+          </section>
+        </article>
+          </div>
+
+      </main>
+      <div class="col-12 col-md-2" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('usernameSearch').value.trim();
+
+      if (username) {
+          window.location.href = `/users/user/${username}`;
+      } else {
+          console.log('No username entered');
+          // Optional: Show user feedback
+          document.getElementById('search-status').textContent = 'Please enter a username';
+      }
+  });
+  </script>
+
+  <script src="{{ url_for('users.static', filename='js/user.js') }}"></script>
+
+  {% endblock %}
