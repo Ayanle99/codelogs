@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+<div id="postFormContainer" class="container d-flex align-items-center justify-content-center py-5" tabindex="-1">
+  <div class="w-100" style="max-width: 600px;">
+    <h2 class="text-center mb-4 display-6">Create a New Post</h2>
+
+    <form method="POST" novalidate aria-label="Create Post Form">
+      {{ form.hidden_tag() }}
+
+      <!-- Title Field -->
+      <div class="mb-3">
+        {{ form.title(class="form-control", placeholder="Enter title", aria_label="Title", id="postTitle") }}
+        {% for error in form.title.errors %}
+          <div class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <!-- Body Field -->
+      <div class="mb-3">
+        {{ form.body(class="form-control", placeholder="Write your post here...", rows="8", aria_label="Body", id="postBody") }}
+        {% for error in form.body.errors %}
+          <div class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid mb-3">
+        <button type="submit" class="btn btn-outline-primary">
+          {{ form.submit.label.text }}
+        </button>
+      </div>
+
+      <div class="text-center small text-muted">
+        <a href="{{ url_for('main.index') }}">Back to home</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('postFormContainer');
+    if (container) {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      container.focus();  // Accffessibility focus
+      const titleInput = document.getElementById('postTitle');
+      if (titleInput) {
+        titleInput.focus();  // Auto-focus title field
+      }
+    }
+  });
+</script>
+{% endblock %}

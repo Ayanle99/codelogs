@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div style="width: 100%; max-width: 500px;">
+    <div class="container m-3 ">
+        <h6 class="display-6 fw-bold text-center">
+            Edit {{ current_user.username }}'s Profile
+        </h6>
+    </div>
+   <form method="POST" action="{{ url_for('users.edit_profile') }}">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.username(class="form-control", placeholder="Enter username") }}
+        {% if form.username.errors %}
+          <div class="text-danger small">
+            {% for error in form.username.errors %}
+              {{ error }}<br>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.email(class="form-control", placeholder="Enter email") }}
+        {% if form.email.errors %}
+          <div class="text-danger small">
+            {% for error in form.email.errors %}
+              {{ error }}<br>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="mb-3">
+          {{ form.password.label(class="form-label") }}
+          {{ form.password(class="form-control", placeholder="Enter new password") }}
+          {% if form.password.errors %}
+            <div class="text-danger small">
+              {% for error in form.password.errors %}
+                {{ error }}<br>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="mb-3">
+          {{ form.confirm_password.label(class="form-label") }}
+          {{ form.confirm_password(class="form-control", placeholder="Confirm new password") }}
+          {% if form.confirm_password.errors %}
+            <div class="text-danger small">
+              {% for error in form.confirm_password.errors %}
+                {{ error }}<br>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+
+      <div class="mb-3">
+        {{ form.bio(class="form-control", rows="4", placeholder="Tell us about yourself...") }}
+        {% if form.bio.errors %}
+          <div class="text-danger small">
+            {% for error in form.bio.errors %}
+              {{ error }}<br>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="justify-content-center d-flex">
+          {{ form.submit(class="btn btn-outline-success w-50") }}
+      </div>
+
+    </form>
+  </div>
+</div>
+{% endblock %}

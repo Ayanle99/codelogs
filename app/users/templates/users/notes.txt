@@ -1,0 +1,10 @@
+
+
+Duplicates sollved in the events list
+
+fix: go to app/models.py and inside both follow() and unfollow() remove
+the  FollowEvent() insertion into the db. That what was causing the duplicates.
+either remove the insertion from users/routes.py follow()/unfollow() functions or
+in the models.
+
+remove saving both events in db and the routes

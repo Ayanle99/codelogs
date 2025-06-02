@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div id="loginFormContainer" class="container login-form d-flex align-items-center justify-content-center" tabindex="-1">
+  <div class="w-100" style="max-width: 400px;">
+    <h2 class="text-center mb-4 display-6">Login</h2>
+
+    <form method="POST" action="" novalidate aria-label="Login Form">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.username(class="form-control", placeholder="Username", aria_label="Username", aria_describedby="usernameHelp", id="username") }}
+        {% for error in form.username.errors %}
+          <div id="usernameHelp" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.password(class="form-control", placeholder="Password", aria_label="Password", aria_describedby="passwordHelp") }}
+        {% for error in form.password.errors %}
+          <div id="passwordHelp" class="form-text text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="form-check mb-3">
+        {{ form.remember_me(class="form-check-input", id="rememberMe") }}
+        {{ form.remember_me.label(class="form-check-label", for="rememberMe") }}
+      </div>
+
+      <div class="d-grid mb-2">
+        <button type="submit" class="btn btn-outline-success">
+          {{ form.submit.label.text }}
+        </button>
+      </div>
+
+      <div class="text-center">
+        <a href="{{ url_for('auth.register') }}" class="small text-muted">Don't have an account? Register</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('loginFormContainer');
+    if (container) {
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      container.focus();  // Focus container for screen readers
+
+      // Also focus the username input for quicker keyboard navigation and screen reader announcement
+      const usernameInput = document.getElementById('username');
+      if (usernameInput) {
+        usernameInput.focus();
+      }
+    }
+  });
+</script>
+{% endblock %}

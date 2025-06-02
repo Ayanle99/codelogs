@@ -1,0 +1,175 @@
+
+
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: black;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.header p {
+    opacity: 0.9;
+    font-size: 1.1rem;
+}
+
+.followers-list {
+    padding: 20px;
+}
+
+.follower-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: black;
+    color: white;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid rgb(43, 43, 41);
+}
+
+.follower-item:hover {
+    background: rgb(43, 43, 41);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-right: 20px;
+}
+
+.user-info {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.username {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.user-details {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-follow {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-follow:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-message {
+    background: #fff;
+    color: #667eea;
+    border: 2px solid #667eea;
+}
+
+.btn-message:hover {
+    background: #667eea;
+    color: white;
+}
+
+.btn-following {
+    background: #28a745;
+    color: white;
+}
+
+.friends {
+    background: linear-gradient(45deg, #ffa500, #ff4500); /* orange to orangered */
+    color: black;
+}
+
+.friends:hover {
+    background: #fbc407;
+    color: black;
+}
+
+.btn-following:hover {
+    background: #218838;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.stat-label {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .follower-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .profile-pic {
+        margin-right: 0;
+    }
+
+    .actions {
+        width: 100%;
+        justify-content: center;
+    }
+}

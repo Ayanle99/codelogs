@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Account Private{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column justify-content-center align-items-center text-center px-3">
+  <h1 class="display-1 fw-bold mb-4">
+    Account is Private
+  </h1>
+
+  <p class="mb-4">
+    Request permission to view?
+  </p>
+
+  {% if has_requested %}
+    <div class="alert alert-info w-100" style="max-width: 320px;">
+      You have already requested permission. Please wait for approval.
+    </div>
+    <div class="container">
+      <form method="POST" action="{{ url_for('users.cancel_request', username=user.username) }}">
+        {{ empty_form.hidden_tag() }}
+        <button type="submit" class="btn btn-link link-danger p-0" style="text-decoration: underline;">
+          want to cancel?
+        </button>
+      </form>
+    </div>
+
+  {% else %}
+    <form method="POST" action="{{ url_for('users.request_account_permision', username=user.username) }}" class="w-100" style="max-width: 320px;">
+      {{ form.hidden_tag() }}
+      {{ form.profile_owner_id(value=user.id) }}
+      {{ form.submit(class="btn btn-outline-success w-100") }}
+    </form>
+  {% endif %}
+
+
+</div>
+
+{% endblock %}
