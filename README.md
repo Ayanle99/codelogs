@@ -39,7 +39,8 @@ This Flask blog app will include:
 | 9   | User Profile Revisited | ✅ Done     |
 | 10  | Accessibility          | ✅ Done     |
 | 11  | Followers              | ✅ Done     |
-| 12  | _Coming soon..._       | 🚧 In progress |
+| 12  | Dates & Time              | ✅ Done     |
+| 13  | _Coming soon..._       | 🚧 In progress |
 
 > Progress will be updated daily as the project develops.
 
